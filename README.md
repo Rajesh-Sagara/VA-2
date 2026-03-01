@@ -5,10 +5,10 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![Frontend](https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-**A multi-issuer document integrity, authenticity & blockchain provenance system — powered by cryptographic signing, a local blockchain, and autonomous AI anomaly response.**
+**A secure, multi-issuer document integrity, authenticity & blockchain provenance system — powered by cryptographic signing, a local blockchain, per-user data isolation, and autonomous AI anomaly response.**
 
 </div>
 
@@ -18,12 +18,12 @@
 
 **Veracity Agent** is an end-to-end document verification platform that guarantees the **integrity**, **authenticity**, and **provenance** of digital files. Every document uploaded to the system is:
 
-1. **Hashed** — a SHA-256 fingerprint is generated for the file
-2. **Signed** — digitally signed with RSA-PSS-SHA256 by a trusted issuer
-3. **Anchored** — recorded as a block in a local blockchain ledger
-4. **Monitored** — continuously watched by an AI anomaly detection agent
+1. **Hashed** — a SHA-256 fingerprint is generated for the file.
+2. **Signed** — digitally signed with RSA-PSS-SHA256 by a trusted issuer.
+3. **Anchored** — recorded as a block in a local blockchain ledger.
+4. **Monitored** — continuously watched by an AI anomaly detection agent.
 
-The system supports **multiple trusted issuers** (e.g., universities, government bodies, external CAs) and features an **autonomous response agent** that can automatically revoke credentials upon detecting suspicious activity.
+**NEW in v2.0:** Complete system overhaul featuring a **modern HTML/CSS/JS frontend**, robust **JWT authentication**, **per-user secure ledgers** ensuring absolute data isolation, and **copy detection** to prevent unauthorized provenance claims.
 
 ---
 
@@ -31,22 +31,24 @@ The system supports **multiple trusted issuers** (e.g., universities, government
 
 | Feature | Description |
 |---|---|
-| 🔐 **Cryptographic Signing** | RSA-PSS-SHA256 signatures per issuer with independent key pairs |
-| ⛓️ **Local Blockchain** | SHA-256 linked chain anchors every document hash immutably |
-| 🏛️ **Multi-Issuer Identity** | DID-based issuer registry (MLRITM, External CA, Govt Registry) |
-| 🧠 **AI Anomaly Detection** | Isolation Forest ML model detects abnormal upload/verify patterns |
-| 🤖 **Autonomous Response** | Auto-revokes credentials when anomalies are detected |
-| 📦 **Batch Operations** | Register and verify multiple files in a single API call |
-| 📊 **Spreadsheet Parsing** | Preview and validate Excel/CSV content on upload |
-| ✅ **File Type Validation** | MIME-type and extension-based validation for documents, images, videos, and spreadsheets |
-| 🌐 **Interactive Dashboard** | Streamlit-powered UI for all operations |
-| 📘 **Auto-Documented API** | Swagger UI available at `/docs` out of the box |
+| 🔐 **Secure Authentication** | JWT-based user registration and login. |
+| 🛡️ **Per-User Isolation** | Private off-chain local ledgers for every user. No cross-account data leaking. |
+| 📋 **Copy Detection** | Instant alerts if a file's hash was already anchored by another user. |
+| 🔑 **Cryptographic Signing** | RSA-PSS-SHA256 signatures per issuer with independent key pairs. |
+| ⛓️ **Local Blockchain** | SHA-256 linked chain anchors every document hash immutably. |
+| 🏛️ **Multi-Issuer Identity** | DID-based issuer registry (MLRITM, External CA, Govt Registry). |
+| 🧠 **AI Anomaly Detection** | Isolation Forest ML model detects abnormal upload/verify patterns. |
+| 🤖 **Autonomous Response** | Auto-revokes credentials when anomalies are detected. |
+| 📦 **Batch Operations** | Register and verify multiple files in a single API call. |
+| 📊 **Spreadsheet Parsing** | Preview and validate Excel/CSV content on upload. |
+| 🌐 **Modern Dashboard UI** | Responsive, sleek, zero-dependency HTML/CSS/JS frontend. |
+| 📘 **Auto-Documented API** | Swagger UI available at `/docs` out of the box. |
 
 ---
 
 ## 🏗️ Architecture
 
-```
+```text
 VA 2/
 ├── backend/
 │   ├── main.py                  # FastAPI application & all API routes
@@ -67,10 +69,17 @@ VA 2/
 │   │   ├── file_validator.py    # MIME-type & extension validation
 │   │   └── excel_parser.py      # Excel/CSV parsing & preview
 │   └── storage/
-│       └── local_ledger.json    # Off-chain document registry
+│       ├── local_ledger.json    # Off-chain document registry (User Scoped)
+│       └── users.json           # Secured user credentials database
+├── frontend/
+│   ├── index.html               # Modern Landing Page
+│   ├── login.html               # User Login UI
+│   ├── register.html            # User Registration UI
+│   ├── dashboard.html           # Secured Dashboard Interface
+│   └── src/                     # CSS Styles and assets
 ├── dashboard/
-│   └── app.py                   # Streamlit frontend dashboard
-├── start.bat                    # One-click launcher (Windows)
+│   └── app.py                   # Legacy Streamlit Frontend
+├── start.bat                    # Interactive One-click launcher (Windows)
 └── req.txt                      # Full dependency list
 ```
 
@@ -78,13 +87,20 @@ VA 2/
 
 ## 🔌 API Endpoints
 
-### 📥 Document Registration
+### 🔐 Authentication
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/auth/register` | Register a new user account |
+| `POST` | `/auth/login` | Login and receive a JWT access token |
+| `GET` | `/auth/me` | Get currently logged-in user profile |
+
+### 📥 Document Registration *(Auth Required)*
 | Method | Endpoint | Description |
 |---|---|---|
 | `POST` | `/upload` | Register, sign, and blockchain-anchor a single file |
 | `POST` | `/upload/batch` | Batch register multiple files under one issuer |
 
-### 🔍 Verification
+### 🔍 Verification *(Auth Required)*
 | Method | Endpoint | Description |
 |---|---|---|
 | `POST` | `/verify` | Verify integrity and authenticity of a single file |
@@ -93,8 +109,8 @@ VA 2/
 ### 📘 Ledger & Blockchain
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/ledger/view` | View all records in the off-chain ledger |
-| `DELETE` | `/ledger/clear` | Clear all ledger records |
+| `GET` | `/ledger/view` | View all records in the logged-in user's ledger |
+| `DELETE` | `/ledger/clear` | Clear all ledger records for the logged-in user |
 | `GET` | `/blockchain/verify` | Validate integrity of the entire blockchain |
 | `GET` | `/blockchain/blocks` | Browse all blockchain blocks |
 
@@ -104,11 +120,6 @@ VA 2/
 | `GET` | `/issuers` | List all trusted issuers in the registry |
 | `GET` | `/anomaly/check` | Run anomaly detection on recent events |
 | `POST` | `/agent/respond` | Trigger autonomous agent response to anomalies |
-
-### 📊 Utilities
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/parse/spreadsheet` | Preview spreadsheet content without registering |
 
 > **Interactive API Docs:** `http://127.0.0.1:8000/docs`
 
@@ -140,70 +151,49 @@ pip install -r req.txt
 
 ### 4. Launch the Application
 
-**Option A — One-click launcher (Windows):**
-```
+**Option A — Interactive Windows Launcher:**
+```bash
 Double-click start.bat
+# You can choose to launch the new HTML Frontend, Legacy Streamlit, or both!
 ```
 
-**Option B — Manual launch:**
+**Option B — Manual Launch:**
 ```bash
 # Terminal 1 — Backend API
 uvicorn backend.main:app --reload
 
-# Terminal 2 — Dashboard
-streamlit run dashboard/app.py
+# Terminal 2 — Frontend
+# Simply open frontend/index.html in any modern web browser!
 ```
 
 ### 5. Access the Services
-| Service | URL |
+| Service | URL / Path |
 |---|---|
-| 🌐 Streamlit Dashboard | http://localhost:8501 |
-| ⚡ FastAPI Backend | http://127.0.0.1:8000 |
-| 📘 Swagger API Docs | http://127.0.0.1:8000/docs |
+| 🌐 Modern Frontend | `frontend/index.html` (Local File) |
+| ⚡ FastAPI Backend | `http://127.0.0.1:8000` |
+| 📘 Swagger API Docs| `http://127.0.0.1:8000/docs` |
+| 📊 Legacy Streamlit| `http://localhost:8501` (If launched) |
 
 ---
 
-## 🔐 How Document Verification Works
+## 🔐 Document Verification Workflow
 
-```
-Upload File
-     │
-     ▼
-┌─────────────────┐
-│  Validate File  │  ← MIME type + extension check
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  Generate Hash  │  ← SHA-256 fingerprint
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  Sign (RSA-PSS) │  ← Issuer private key
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ Save to Ledger  │  ← Off-chain JSON ledger
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ Anchor to Chain │  ← SHA-256 linked blockchain block
-└─────────────────┘
-```
+1. **Upload File**: User securely uploads a file via the JWT-protected API.
+2. **Validate & Hash**: File MIME type is checked and a SHA-256 fingerprint generated.
+3. **Copy Detection**: System verifies if the document hash is already tied to another user.
+4. **Sign (RSA-PSS)**: The unique document hash is signed privately by the chosen issuer.
+5. **Private Ledgering**: The signature and metadata are saved to the user's isolated local ledger.
+6. **Chain Anchoring**: The transaction is anchored into the global, tamper-evident SHA-256 local blockchain.
 
 **On Verification:**
-- The file is re-hashed and looked up in the ledger
-- The issuer's RSA signature is verified against the stored record
-- The result is one of: `VERIFIED` ✅ | `TAMPERED OR UNKNOWN` ❌ | `REVOKED` 🚫 | `REJECTED` ⛔
+Upload the same file anytime. The system instantly returns:
+`VERIFIED` ✅ | `TAMPERED OR UNKNOWN` ❌ | `REVOKED` 🚫 | `REJECTED` ⛔
 
 ---
 
 ## 🏛️ Trusted Issuers
 
-The system ships with three pre-configured DID-based issuers, each with their own RSA key pair:
+The system ships with three pre-configured DID-based issuers, each with their own automatically generated RSA key pairs:
 
 | DID | Name | Short |
 |---|---|---|
@@ -211,42 +201,14 @@ The system ships with three pre-configured DID-based issuers, each with their ow
 | `did:veracity:external` | External Certification Authority | External CA |
 | `did:veracity:govt` | Government Digital Registry | Govt Registry |
 
-> Keys are auto-generated on first startup if they do not exist.
-
 ---
 
 ## 🧠 Anomaly Detection & Autonomous Response
 
 The anomaly detection module uses **scikit-learn's Isolation Forest** to monitor event patterns (uploads, verifications) in real time.
 
-- **Features analyzed:** Request count, event type encoding
-- **Trigger:** If the latest event is flagged as an outlier (`prediction == -1`)
-- **Response:** The `/agent/respond` endpoint automatically invokes credential revocation for all unrevoked records in the ledger
-
----
-
-## 📦 Dependencies
-
-```
-# Backend (FastAPI)
-fastapi
-uvicorn
-python-multipart
-cryptography
-
-# Frontend (Streamlit Dashboard)
-streamlit
-requests
-Pillow
-
-# Data & ML (Anomaly Detection)
-pandas
-numpy
-scikit-learn
-
-# Spreadsheet Parsing
-openpyxl
-```
+- **Trigger:** If the latest event is flagged as an outlier (`prediction == -1`).
+- **Response:** The `/agent/respond` endpoint automatically isolates threats by invoking credential revocation for unrevoked records, cutting off the tampering vector.
 
 ---
 
@@ -269,5 +231,5 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ---
 
 <div align="center">
-Made with ❤️ for document trust and integrity
+Made with ❤️ for absolute document trust and cryptographic integrity
 </div>
