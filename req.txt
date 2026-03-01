@@ -1,0 +1,18 @@
+# ── Backend (FastAPI) ─────────────────────────────────────────────────────────
+fastapi
+uvicorn
+python-multipart
+cryptography
+
+# ── Frontend (Streamlit Dashboard) ───────────────────────────────────────────
+streamlit
+requests
+Pillow
+
+# ── Data & ML (Anomaly Detection) ────────────────────────────────────────────
+pandas
+numpy
+scikit-learn
+
+# ── Spreadsheet Parsing ───────────────────────────────────────────────────────
+openpyxl

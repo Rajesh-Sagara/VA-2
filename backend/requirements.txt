@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+streamlit
+cryptography
+openpyxl
+pandas
+Pillow
+requests
