@@ -225,5 +225,53 @@
         "details": {
             "removed_records": 0
         }
+    },
+    {
+        "event_type": "upload",
+        "timestamp": 1772383221.039837,
+        "details": {
+            "count": 1,
+            "hash": "f394f35f3933250313018b30903d28db5b0c18bf0e1e5b15dc6cec968f41492e"
+        }
+    },
+    {
+        "event_type": "verify",
+        "timestamp": 1772383231.6699364,
+        "details": {
+            "count": 1,
+            "hash": "f394f35f3933250313018b30903d28db5b0c18bf0e1e5b15dc6cec968f41492e"
+        }
+    },
+    {
+        "event_type": "upload",
+        "timestamp": 1772383375.1086953,
+        "details": {
+            "count": 1,
+            "hash": "f394f35f3933250313018b30903d28db5b0c18bf0e1e5b15dc6cec968f41492e"
+        }
+    },
+    {
+        "event_type": "verify",
+        "timestamp": 1772384849.7737384,
+        "details": {
+            "count": 1,
+            "hash": "f394f35f3933250313018b30903d28db5b0c18bf0e1e5b15dc6cec968f41492e"
+        }
+    },
+    {
+        "event_type": "verify",
+        "timestamp": 1772384859.88623,
+        "details": {
+            "count": 1,
+            "hash": "f394f35f3933250313018b30903d28db5b0c18bf0e1e5b15dc6cec968f41492e"
+        }
+    },
+    {
+        "event_type": "verify",
+        "timestamp": 1772384882.9375253,
+        "details": {
+            "count": 1,
+            "hash": "f394f35f3933250313018b30903d28db5b0c18bf0e1e5b15dc6cec968f41492e"
+        }
     }
 ]

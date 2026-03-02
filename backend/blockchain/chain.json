@@ -29,5 +29,21 @@
         "issuer_did": "did:veracity:mlritm",
         "previous_hash": "5f8b3f80d8f7859dd862399bfd0b175a298e935aad47cacabd00aa73e9ffccf0",
         "block_hash": "f1d55e72ba192bd7c11059f24012109fc5e710302f44876fa71cce01c32a738f"
+    },
+    {
+        "index": 4,
+        "timestamp": 1772383221.038968,
+        "file_hash": "f394f35f3933250313018b30903d28db5b0c18bf0e1e5b15dc6cec968f41492e",
+        "issuer_did": "did:veracity:external",
+        "previous_hash": "f1d55e72ba192bd7c11059f24012109fc5e710302f44876fa71cce01c32a738f",
+        "block_hash": "8c2003d126c3c20a09d4439d6b861b136c2be286a7b388941d618727fa470bf4"
+    },
+    {
+        "index": 5,
+        "timestamp": 1772383375.108234,
+        "file_hash": "f394f35f3933250313018b30903d28db5b0c18bf0e1e5b15dc6cec968f41492e",
+        "issuer_did": "did:veracity:mlritm",
+        "previous_hash": "8c2003d126c3c20a09d4439d6b861b136c2be286a7b388941d618727fa470bf4",
+        "block_hash": "2613438127eda7c58b269a573cc25acfd0245fd25cfd9b48ac81e57c44b44f82"
     }
 ]
